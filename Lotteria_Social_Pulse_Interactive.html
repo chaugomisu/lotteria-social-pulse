@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lotteria Social Pulse</title>
+<style>
+:root{--red:#d71920;--ink:#20242c;--muted:#737b88;--line:#e8ebef;--bg:#f5f6f8;--white:#fff;--soft:#fff0f0;--green:#18845b;--amber:#a96b00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+.app{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:100vh}.side{background:#fff;border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;margin:0 8px 28px}.logo{width:34px;height:34px;border-radius:10px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:900}
+.eyebrow{font-size:10px;color:#9aa1aa;font-weight:800;letter-spacing:.12em;margin:22px 10px 8px}
+.nav{width:100%;display:flex;gap:10px;align-items:center;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:9px;color:#5f6671;margin:3px 0;cursor:pointer;font:inherit}
+.nav:hover{background:#f7f7f8}.nav.active{background:var(--soft);color:var(--red);font-weight:700}
+.side-foot{position:absolute;bottom:20px;left:24px;color:#9299a3;font-size:11px}
+.main{padding:28px 32px;max-width:1600px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.title{font-size:25px;font-weight:800;letter-spacing:-.03em}.sub{color:var(--muted);margin-top:4px}
+.status{display:inline-flex;align-items:center;gap:7px;border:1px solid #f0d9b2;background:#fff8e9;color:#966000;border-radius:99px;padding:7px 11px;font-size:12px;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:#d79a25}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.filters button,.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;color:#5d6570;cursor:pointer;font:inherit}
+.filters button:hover,.btn:hover{border-color:#d4a0a2}.filters button.on{border-color:#e5a5a7;background:#fff1f1;color:var(--red);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px}
+.metric-label{font-size:12px;color:var(--muted);font-weight:600}.metric{font-size:25px;font-weight:800;margin:10px 0 4px}.hint{font-size:11px;color:#9299a3}
+.section{margin-top:18px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.section-head h2{font-size:15px;margin:0}
+.twocol{display:grid;grid-template-columns:1.35fr 1fr;gap:14px}.empty{min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:22px}
+.empty strong{color:#303640;margin:8px 0 3px}.icon{font-size:25px;color:#c0c6ce}
+.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px 8px;border-bottom:1px solid #f0f1f3;font-size:12px}.table th{color:#8a929d;font-weight:600}
+.tag{font-size:11px;border-radius:6px;padding:4px 7px;background:#f3f4f6;color:#66707c}
+.source{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f1f3}.source:last-child{border:0}.source small{display:block;color:var(--muted);margin-top:2px}
+.notice{border:1px solid #f1dfbd;background:#fff9ee;border-radius:11px;padding:13px 15px;color:#805d20;margin-top:18px;font-size:12px}
+.view{display:none}.view.active{display:block}.page-intro{margin:8px 0 18px;color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.listrow{padding:14px 0;border-bottom:1px solid #f0f1f3;display:flex;justify-content:space-between;gap:15px}
+select,input{border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:white;color:var(--ink);font:inherit}
+.small-note{font-size:12px;color:var(--muted)}.primary{background:var(--red);border-color:var(--red);color:white}.primary:hover{background:#b9141b;color:white}
+.toast{position:fixed;right:22px;bottom:22px;background:#20242c;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 30px #0002;display:none;z-index:10;max-width:360px}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{position:relative;height:auto;padding:12px}.side-foot{display:none}.brand{margin-bottom:10px}.navwrap{display:flex;overflow:auto;gap:4px}.nav{white-space:nowrap;width:auto}.eyebrow{display:none}.main{padding:20px 15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.twocol{grid-template-columns:1fr}.top{flex-direction:column}}
+@media(max-width:460px){.grid{grid-template-columns:1fr 1fr}.metric{font-size:21px}.title{font-size:22px}}
+</style></head>
+<body>
+<div class="app">
+<aside class="side">
+ <div class="brand"><div class="logo">L</div>Lotteria Social Pulse</div>
+ <div class="eyebrow">WORKSPACE</div>
+ <div class="navwrap" id="navwrap">
+  <button class="nav active" data-view="overview">▦ Executive Overview</button>
+  <button class="nav" data-view="competitors">◫ Competitor Intelligence</button>
+  <button class="nav" data-view="content">▤ Content Intelligence</button>
+  <button class="nav" data-view="campaigns">◉ Campaign Watch</button>
+  <button class="nav" data-view="alerts">♧ Alerts & AI Insights</button>
+ </div>
+ <div class="eyebrow">CONFIGURATION</div>
+ <button class="nav" data-view="settings">⚙ Data Sources & Settings</button>
+ <div class="side-foot">Vietnam Marketing Intelligence<br>Version 0.2 · Interactive free build</div>
+</aside>
+<main class="main">
+<section class="view active" id="overview">
+ <div class="top"><div><div class="title">Executive Overview</div><div class="sub">Theo dõi hoạt động social của Lotteria và 5 đối thủ cạnh tranh</div></div><div class="status"><span class="dot"></span> Chưa kết nối nguồn dữ liệu</div></div>
+ <div class="filters" id="overviewFilters">
+  <button class="on" data-filter="period" data-value="30 ngày">Last 30 days</button><button data-filter="period" data-value="90 ngày">Last 90 days</button>
+  <button data-filter="platform" data-value="Facebook">Facebook</button><button data-filter="platform" data-value="TikTok">TikTok</button><button data-filter="platform" data-value="Instagram">Instagram</button><button data-filter="platform" data-value="Threads">Threads</button><button data-filter="platform" data-value="Tất cả nền tảng">All platforms</button>
+  <button data-filter="brand" data-value="Tất cả thương hiệu">All brands</button>
+ </div>
+ <div class="small-note" id="filterState">Đang xem: 30 ngày · Tất cả nền tảng · Tất cả thương hiệu</div>
+ <div class="grid section">
+  <div class="card"><div class="metric-label">Total Mentions</div><div class="metric">—</div><div class="hint">Chưa có dữ liệu từ provider</div></div>
+  <div class="card"><div class="metric-label">Share of Voice</div><div class="metric">—</div><div class="hint">Chưa đủ dữ liệu để tính</div></div>
+  <div class="card"><div class="metric-label">Engagement</div><div class="metric">—</div><div class="hint">Chưa có metric snapshots</div></div>
+  <div class="card"><div class="metric-label">Positive Sentiment</div><div class="metric">—</div><div class="hint">Chưa chạy AI enrichment</div></div>
+ </div>
+ <div class="twocol section">
+  <div class="card"><div class="section-head"><h2>Brand Mention Trend</h2><span class="tag">Daily</span></div><div class="empty"><div class="icon">⌁</div><strong>Chưa có dữ liệu xu hướng</strong><span>Kết nối nguồn social listening để hiển thị mention theo ngày.</span></div></div>
+  <div class="card"><div class="section-head"><h2>Sentiment Distribution</h2><span class="tag">All brands</span></div><div class="empty"><div class="icon">◌</div><strong>Chưa có dữ liệu sentiment</strong><span>Không hiển thị biểu đồ khi chưa có dữ liệu thật.</span></div></div>
+ </div>
+ <div class="twocol section">
+  <div class="card"><div class="section-head"><h2>Competitor Snapshot</h2><span class="tag">6 brands</span></div><table class="table"><thead><tr><th>Brand</th><th>Mentions</th><th>Engagement</th><th>Sentiment</th></tr></thead><tbody><tr><td><b>Lotteria</b></td><td>—</td><td>—</td><td>—</td></tr><tr><td>KFC</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Jollibee</td><td>—</td><td>—</td><td>—</td></tr><tr><td>McDonald's</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Popeyes</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Texas Chicken</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+  <div class="card"><div class="section-head"><h2>Source Coverage</h2><span class="tag">4 platforms</span></div><div class="source"><div>Facebook<small>Chưa chọn provider</small></div><span class="tag">Not connected</span></div><div class="source"><div>TikTok<small>Chưa chọn provider</small></div><span class="tag">Not connected</span></div><div class="source"><div>Instagram<small>Chưa chọn provider</small></div><span class="tag">Not connected</span></div><div class="source"><div>Threads<small>Chưa chọn provider</small></div><span class="tag">Not connected</span></div></div>
+ </div>
+ <div class="notice"><b>Data integrity:</b> Dashboard chưa nhận dữ liệu social thật. Các chỉ số được để trống thay vì dùng số demo. UGC chưa được kết nối. Lịch refresh mục tiêu: 3 giờ/lần (Asia/Ho_Chi_Minh), chưa kích hoạt.</div>
+</section>
+
+<section class="view" id="competitors">
+ <div class="title">Competitor Intelligence</div><p class="page-intro">So sánh hoạt động của Lotteria và 5 thương hiệu cạnh tranh. Các chỉ số sẽ được điền khi có dữ liệu hợp lệ.</p>
+ <div class="card"><div class="section-head"><h2>Brand comparison</h2><span class="tag">6 brands</span></div><table class="table"><thead><tr><th>Brand</th><th>Mentions</th><th>Engagement</th><th>Share of Voice</th><th>Sentiment</th></tr></thead><tbody><tr><td><b>Lotteria</b></td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>KFC</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Jollibee</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>McDonald's</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Popeyes</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Texas Chicken</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+ <div class="notice">Chưa có dữ liệu nguồn để xếp hạng hoặc kết luận thương hiệu nào đang dẫn đầu.</div>
+</section>
+
+<section class="view" id="content">
+ <div class="title">Content Intelligence</div><p class="page-intro">Theo dõi format, chủ đề, nội dung nổi bật và creator content của 6 thương hiệu.</p>
+ <div class="grid"><div class="card"><div class="metric-label">Top content</div><div class="metric">—</div><div class="hint">Chưa có post data</div></div><div class="card"><div class="metric-label">Top topics</div><div class="metric">—</div><div class="hint">Chưa chạy topic clustering</div></div><div class="card"><div class="metric-label">Creator mentions</div><div class="metric">—</div><div class="hint">Chưa có UGC data</div></div><div class="card"><div class="metric-label">Engagement rate</div><div class="metric">—</div><div class="hint">Chưa có metrics</div></div></div>
+ <div class="card section"><div class="section-head"><h2>Content library</h2><span class="tag">No records</span></div><div class="empty"><strong>Chưa có nội dung để phân tích</strong><span>Bài viết sẽ xuất hiện ở đây sau khi kết nối nguồn thu thập.</span></div></div>
+</section>
+
+<section class="view" id="campaigns">
+ <div class="title">Campaign Watch</div><p class="page-intro">Theo dõi campaign, sản phẩm mới, promotion và hoạt động truyền thông của đối thủ.</p>
+ <div class="grid"><div class="card"><div class="metric-label">Campaigns detected</div><div class="metric">—</div><div class="hint">Chưa có dữ liệu</div></div><div class="card"><div class="metric-label">New product launches</div><div class="metric">—</div><div class="hint">Chưa có dữ liệu</div></div><div class="card"><div class="metric-label">Promotion activity</div><div class="metric">—</div><div class="hint">Chưa có dữ liệu</div></div><div class="card"><div class="metric-label">Competitor spikes</div><div class="metric">—</div><div class="hint">Chưa có dữ liệu</div></div></div>
+ <div class="card section"><div class="empty"><strong>Chưa phát hiện campaign mới</strong><span>Không có nghĩa là đối thủ không chạy campaign; nguồn dữ liệu chưa được kết nối.</span></div></div>
+</section>
+
+<section class="view" id="alerts">
+ <div class="title">Alerts & AI Insights</div><p class="page-intro">Các cảnh báo dự kiến: viral spike, complaint nghiêm trọng, food safety, campaign mới và lỗi nguồn dữ liệu.</p>
+ <div class="card"><div class="section-head"><h2>Alert center</h2><span class="tag">No active alerts</span></div><div class="empty"><strong>Chưa có cảnh báo</strong><span>Chưa có pipeline thu thập và phân tích để kích hoạt cảnh báo.</span></div></div>
+ <div class="card section"><h2>Alert rules (preview)</h2><div class="listrow"><span>Viral spike</span><span class="tag">Chưa kích hoạt</span></div><div class="listrow"><span>Serious complaint / food safety</span><span class="tag">Chưa kích hoạt</span></div><div class="listrow"><span>Competitor campaign / product launch</span><span class="tag">Chưa kích hoạt</span></div><div class="listrow"><span>Negative sentiment cluster</span><span class="tag">Chưa kích hoạt</span></div><div class="listrow"><span>Source outage / data quality</span><span class="tag">Chưa kích hoạt</span></div></div>
+</section>
+
+<section class="view" id="settings">
+ <div class="title">Data Sources & Settings</div><p class="page-intro">Cấu hình nguồn dữ liệu và lịch cập nhật. Hiện chưa có provider/API nào được kết nối.</p>
+ <div class="card"><div class="section-head"><h2>Platform connections</h2><span class="tag">0 / 4 connected</span></div>
+  <div class="source"><div><b>Facebook</b><small>Public posts, pages and public UGC where permitted</small></div><span class="tag">Not connected</span></div>
+  <div class="source"><div><b>TikTok</b><small>Public content subject to provider/API coverage</small></div><span class="tag">Not connected</span></div>
+  <div class="source"><div><b>Instagram</b><small>Public creator/business content subject to access rights</small></div><span class="tag">Not connected</span></div>
+  <div class="source"><div><b>Threads</b><small>Public content subject to API/provider coverage</small></div><span class="tag">Not connected</span></div>
+ </div>
+ <div class="card section"><h2>Refresh schedule</h2><div class="row" style="margin-top:12px"><label for="schedule">Target frequency</label><select id="schedule"><option>Every 3 hours</option><option>Every 6 hours</option><option>Daily</option><option>Manual only</option></select><label for="timezone">Timezone</label><select id="timezone"><option>Asia/Ho_Chi_Minh</option></select><button class="btn primary" id="saveSchedule">Save preference</button></div><p class="small-note">Lưu ý: đây chỉ là lựa chọn hiển thị trong trình duyệt, chưa tạo scheduler chạy nền.</p></div>
+ <div class="card section"><h2>Tracked brands</h2><p>Lotteria · KFC · Jollibee · McDonald's · Popeyes · Texas Chicken</p><p class="small-note">Historical target: 90 days, tùy khả năng backfill của provider.</p></div>
+</section>
+</main></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function(){
+ const navButtons=[...document.querySelectorAll('[data-view]')];
+ const views=[...document.querySelectorAll('.view')];
+ const titles={overview:'Executive Overview',competitors:'Competitor Intelligence',content:'Content Intelligence',campaigns:'Campaign Watch',alerts:'Alerts & AI Insights',settings:'Data Sources & Settings'};
+ function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.style.display='none',3200)}
+ navButtons.forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.view;views.forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n===b));window.scrollTo({top:0,behavior:'smooth'});}));
+ const state={period:'30 ngày',platform:'Tất cả nền tảng',brand:'Tất cả thương hiệu'};
+ document.querySelectorAll('#overviewFilters button').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.filter,v=b.dataset.value;state[k]=v;
+  if(k==='period')document.querySelectorAll('[data-filter="period"]').forEach(x=>x.classList.toggle('on',x===b));
+  else if(k==='platform')document.querySelectorAll('[data-filter="platform"]').forEach(x=>x.classList.toggle('on',x===b));
+  else {const brand=prompt('Nhập tên thương hiệu: Lotteria, KFC, Jollibee, McDonald\\'s, Popeyes, Texas Chicken hoặc Tất cả thương hiệu',state.brand);if(brand===null)return;const allowed=['Lotteria','KFC','Jollibee',"McDonald's",'Popeyes','Texas Chicken','Tất cả thương hiệu'];if(!allowed.includes(brand)){showToast('Tên thương hiệu chưa nằm trong danh sách theo dõi.');return;}state.brand=brand;b.textContent=brand==='Tất cả thương hiệu'?'All brands':brand;}
+  document.getElementById('filterState').textContent='Đang xem: '+state.period+' · '+state.platform+' · '+state.brand+'. Chưa có dữ liệu nguồn để lọc.';
+  showToast('Đã áp dụng bộ lọc. Dữ liệu sẽ hiển thị khi kết nối provider.');
+ }));
+ document.getElementById('saveSchedule').addEventListener('click',()=>showToast('Đã lưu lựa chọn trong phiên này. Scheduler nền chưa được kích hoạt.'));
+})();
+</script>
+</body></html>
